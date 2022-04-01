@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const router = require('express').Router();
 const {BCRYPT_ROUNDS} = require('../secret')
 const User = require('../users/users-model')
-const {checkUsernameFree, validateUser, } = require('../auth/auth-middleware')
+const {checkUsernameFree, validateUser, checkUsernameExists, } = require('../auth/auth-middleware')
 const restricted = require('../middleware/restricted')
 const makeToken = require('./token-builder')
 
@@ -55,7 +55,7 @@ router.post('/register', validateUser  , checkUsernameFree, async (req, res, nex
 
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', validateUser ,checkUsernameExists, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -80,11 +80,11 @@ router.post('/login', (req, res, next) => {
       the response body should include a string exactly as follows: "invalid credentials".
   */
       let { password } = req.body
-      console.log(req.body)
+      console.log(req.body.password)
       if (bcrypt.compareSync(password, req.user.password)) {
       
         const token = makeToken(req.user)
-        res.status(200).json({ message: `Welcome, ${req.user.username}`, token })
+        res.status(200).json({ message: `Welcome ${req.user.username}`, token })
       } else {
         next({ status: 401, message: 'Invalid Credentials' })
       }
