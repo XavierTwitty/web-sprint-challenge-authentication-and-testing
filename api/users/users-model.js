@@ -1,4 +1,4 @@
-const db = require('../users/users-model')
+const db = require('../../data/dbConfig')
 
 async function insert(user) {
     const [id] = await db('users').insert(user);

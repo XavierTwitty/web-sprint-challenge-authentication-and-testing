@@ -16,7 +16,8 @@ async function checkUsernameFree(req, res, next) {
   }
 }
 
-const validateUser = (req, res, next) => {
+function validateUser (req, res, next) {
+    console.log(req.body)
     const {username, password} = req.body
     if(
         !username.trim() || 
@@ -27,6 +28,8 @@ const validateUser = (req, res, next) => {
         message:"username and password required",
         status:400
       })
+    } else {
+        next()
     }
 
 }
