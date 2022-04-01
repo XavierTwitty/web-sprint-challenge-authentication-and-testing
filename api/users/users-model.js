@@ -1,5 +1,10 @@
 const db = require('../../data/dbConfig')
 
+
+function getAll() {
+  return db('users')
+}
+
 async function insert(user) {
     const [id] = await db('users').insert(user);
     return getById(id);
@@ -16,5 +21,6 @@ async function insert(user) {
   module.exports = {
       insert, 
       getById,
-      findBy
+      findBy,
+      getAll
   }

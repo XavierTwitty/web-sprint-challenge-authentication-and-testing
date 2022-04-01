@@ -17,7 +17,6 @@ async function checkUsernameFree(req, res, next) {
 }
 
 function validateUser (req, res, next) {
-    console.log(req.body)
     const {username, password} = req.body
     if(
         !username.trim() || 

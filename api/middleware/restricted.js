@@ -5,7 +5,6 @@ const { JWT_SECRET } = require('../../data/dbConfig'); // use this secret!
 
 module.exports = (req, res, next) => {
 
-  next();
   /*
     IMPLEMENT
 
